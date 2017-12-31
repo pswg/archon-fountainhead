@@ -1,5 +1,4 @@
 const { execSync } = require('child_process');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
@@ -15,11 +14,11 @@ app.use("/", (req, res, next) => {
 });
 
 app.get('/merge',function(req,res){
-    res.sendFile('merge.html');
-})
+    res.sendFile('views/merge.html');
+});
 
 app.post('/merge', function(req, res) {
     res.send('You sent "' + req.body.prNumber + '".');
-  });
+});
 
 const server = app.listen(3000);
