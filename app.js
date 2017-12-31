@@ -15,11 +15,11 @@ app.use("/", (req, res, next) => {
 });
 
 app.get('/merge',function(req,res){
-    res.sendFile('merge.html');
-})
+    res.sendFile('views/merge.html');
+});
 
 app.post('/merge', function(req, res) {
     res.send('You sent "' + req.body.prNumber + '".');
-  });
+});
 
 const server = app.listen(3000);
