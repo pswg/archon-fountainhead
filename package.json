@@ -1,0 +1,23 @@
+{
+  "name": "archon-fountainhead",
+  "version": "1.0.0",
+  "description": "Archon Code for Fountainhead Impyr.io Instance",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/impyrio/archon-fountainhead.git"
+  },
+  "author": "Patrick Kohler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/impyrio/archon-fountainhead/issues"
+  },
+  "homepage": "https://github.com/impyrio/archon-fountainhead#readme",
+  "dependencies": {
+    "git-utils": "^5.2.0",
+    "http": "0.0.0"
+  }
+}
