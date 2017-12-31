@@ -4,7 +4,7 @@
   "description": "Archon Code for Fountainhead Impyr.io Instance",
   "main": "app.js",
   "scripts": {
-    "start":"node app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/impyrio/archon-fountainhead#readme",
   "dependencies": {
-    "git-utils": "^5.2.0",
-    "http": "0.0.0"
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2"
   }
 }
