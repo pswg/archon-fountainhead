@@ -1,7 +1,9 @@
 const { execSync } = require('child_process');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 // check for updates
 app.use("/", (req, res, next) => {
@@ -11,5 +13,13 @@ app.use("/", (req, res, next) => {
         server.close();
     }
 });
+
+app.get('/merge',function(req,res){
+    res.sendFile('merge.html');
+})
+
+app.post('/merge', function(req, res) {
+    res.send('You sent "' + req.body.prNumber + '".');
+  });
 
 const server = app.listen(3000);
