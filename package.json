@@ -4,7 +4,8 @@
   "description": "Archon Code for Fountainhead Impyr.io Instance",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "set NODE_ENV=DEV && node app.js",
+    "start_prod" : "set NODE_ENV=PROD && node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
