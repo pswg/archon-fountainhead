@@ -6,7 +6,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // check for updates
 app.use("/", (req, res, next) => {
-    if (process.env.NODE_ENV === "DEV") {
+    const gitStatus = execSync('git status');
+    if (gitStatus.indexOf('up-to-date') == -1) {
+        res.sendStatus(503);
+        server.close();
+    } else {
         next();
     }
     else {
