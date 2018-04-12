@@ -13,15 +13,6 @@ app.use("/", (req, res, next) => {
     } else {
         next();
     }
-    else {
-        const gitStatus = execSync('git status');
-        if (gitStatus.indexOf('up-to-date') == -1) {
-            res.sendStatus(503);
-            server.close();
-        } else {
-            next();
-        }
-    }
 });
 
 app.get('/merge', function (req, res) {
