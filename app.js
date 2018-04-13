@@ -1,7 +1,6 @@
 'use strict';
 
-const { exec } = require('child_process');
-const { execSync } = require('child_process');
+const process = require('process');
 const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
@@ -10,11 +9,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // check for updates
 app.use("/", (req, res, next) => {
-    const gitStatus = execSync('git status');
-    if (gitStatus.indexOf('up-to-date') == -1) {
-        res.sendStatus(503);
-        server.close();
+    if (process.env.SHA) {
+        const uri = `https://api.github.com/repos/impyrio/archon-fountainhead/branches/master`;
+        const opts = {
+            json: true,
+            headers: { 'User-Agent': 'request' }
+        };
+        rp.get({uri, ...opts})
+            .then(({name, commit: {sha}}) => {
+                if (sha !== process.env.SHA) {
+                    res.status(503).send('A new version is available... server will restart soon');
+                } else {
+                next();
+                }
+            });
     } else {
+        console.warn('No SHA defined. If this is a production environment, it may be vulnerable to attack.');
         next();
     }
 });
