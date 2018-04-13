@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "set NODE_ENV=DEV && node app.js",
-    "start_prod" : "set NODE_ENV=PROD && node app.js",
-    "test": "mocha test/test.js"
+    "start_prod": "set NODE_ENV=PROD && node app.js",
+    "test": "mocha test/*.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,8 @@
   "homepage": "https://github.com/impyrio/archon-fountainhead#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
   }
 }
