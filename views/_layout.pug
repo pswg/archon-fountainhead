@@ -1,0 +1,17 @@
+html
+  head
+    title fountainhead - #{title}
+    link(rel='stylesheet'
+         href='//unpkg.com/blaze@4.0.0-6/scss/dist/blaze.min.css')
+    link(rel='stylesheet'
+         href='//use.fontawesome.com/releases/v5.0.10/css/all.css')
+  body.c-text
+    .o-container.o-container--large
+      block content
+    .o-container.o-container--large
+      if meta && meta['x-ratelimit-limit']
+        p.u-xsmall.c-text--mono#rate_limit
+          | api rate limit: 
+          | #{meta['x-ratelimit-remaining']}/#{meta['x-ratelimit-limit']}
+      else
+        p.u-xsmall.c-text--mono no meta *frumple*

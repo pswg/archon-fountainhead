@@ -1,0 +1,27 @@
+extends ../_layout.pug
+
+block content
+  h1.c-heading.u-xlarge pull requests
+  div.u-small
+    span.u-pillar-box-tiny filters:
+    each link, key in {open:'', closed:'/closed', 'all':'/all'}
+      span.u-pillar-box-tiny
+        if key === state
+          a(href=`/pulls${link}`).c-button= key
+        else
+          a(href=`/pulls${link}`).c-button.c-button--ghost= key
+
+  ul
+    each item in data
+      li
+        div
+          a(href=`/pulls/${item.number}`
+            title= item.title).c-link
+            = `#${item.number}: ${item.title}`
+          a(href=item.html_url
+            target='_blank'
+            title='View on GitHub').c-link.c-link--info.u-pillar-box-small
+            i.fab.fa-github-alt
+            sup.u-pillar-box-tiny: i.fas.fa-external-link-alt
+    else
+      li No pull requests found.

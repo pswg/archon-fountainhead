@@ -6,55 +6,65 @@ const api = require('../../lib/github-api');
 
 const router = express.Router();
 
-router.get('/', function (req, res) {
-  res.sendFile('merge.html', {
-    root: __dirname + '../../../views/'
-  });
-});
+function list(state) {
+  return (req, res, next) => 
+    api.pullRequests.getAll({
+        repo: repo.repo,
+        owner: repo.owner,
+        state
+      })
+      .then(result => { res.render('pulls/list', {state, ...result}); })
+      .catch(err => { next(err); });
+}
 
-router.get('/:number', function (req, res) {
-  const number = parseInt(req.params.number);
+function item() {
+  return (req, res, next) => {
+    const number = parseInt(req.params.number);
 
-  api.pullRequests.get({
-      number,
-      repo: repo.repo,
-      owner: repo.owner,
-    })
-    .then(({data, meta}) => {
-      console.log(result);
-    });
-});
+    return api.pullRequests.get({
+        number,
+        repo: repo.repo,
+        owner: repo.owner,
+      })
+      .then(result => { res.render('pulls/item', {number, ...result}); })
+      .catch(err => { next(err); });
+  };
+}
 
-router.post('/:number/merge', function (req, res) {
-  const number = parseInt(req.params.number);
+function merge() {
+  return (req, res, next) => {
+    const number = parseInt(req.params.number);
 
-  api.pullRequests.get({
-      number,
-      repo: repo.repo,
-      owner: repo.owner,
-    })
-    .then((pr) => {
-      const title = `Merge pull request #${number} from ${pr.head.label}`;
-      const message = pr.title;
-      const sha = pr.head.sha;
+    return api.pullRequests.get({
+        number,
+        repo: repo.repo,
+        owner: repo.owner,
+      })
+      .then(pr => {
+        const title = `Merge pull request #${number} from ${pr.head.label}`;
+        const message = pr.title;
+        const sha = pr.head.sha;
 
-      return rp.put({
-          repo: repo.repo,
-          owner: repo.owner,
-          number,
-          commit_title: title,
-          commit_message: message,
-          sha
-        })
-        .then(({
-          message,
-          sha
-        }) => res.send(`Result: ${message} \nsha: ${sha}`));
-    })
-    .catch(({
-      message,
-      documentation_url
-    }) => res.send(`Failed: ${message}`));
-});
+        return api.pullRequests.merge({
+            repo: repo.repo,
+            owner: repo.owner,
+            number,
+            commit_title: title,
+            commit_message: message,
+            sha
+          });
+      })
+      .then(result => { res.render('pulls/merged', {number, ...result}); })
+      .catch(err => { next(err); });
+  };
+}
+
+router.get('/', list('open'));
+router.get('/closed', list('closed'));
+router.get('/all', list('all'));
+
+router.get('/:number', item());
+
+router.post('/merge', merge());
 
 module.exports = router;

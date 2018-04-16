@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const process = require('process');
 const bodyParser = require('body-parser');
 const repo = require('./config/github-api').repo;
@@ -13,7 +14,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // check for updates
-app.use("/", (req, res, next) => {
+app.use('/', (req, res, next) => {
   if (process.env.SHA) {
     api.repos.getBranch({
       owner: repo.owner,
@@ -33,11 +34,32 @@ app.use("/", (req, res, next) => {
       res.sendStatus(500);
     });
   } else {
-    console.warn('No SHA defined. If this is a production environment, it may be vulnerable to attack.');
+    console.warn('SHA not defined. If this is a production environment, it may be vulnerable to attack.');
     next();
   }
 });
 
 app.use('/pulls', require('./controllers/pulls'));
+
+// generic error handler
+app.use(function(err, req, res, next) {
+  const code = err.code || 500;
+  const meta = err.headers;
+  const specificView = `errors/${code}`;
+  const genericView = 'errors/_generic'
+  const view = 
+    fs.existsSync(`${__dirname}/views/${specificView}.pug`)
+      ? specificView 
+      : genericView;
+  let data;
+  try { 
+    data = JSON.parse(err.message); 
+  } catch(_) {
+  }
+  res.status(code).render(view, {code, data, err, meta});
+  next(err);
+});
+
+app.set('view engine', 'pug');
 
 const server = app.listen(3000);
