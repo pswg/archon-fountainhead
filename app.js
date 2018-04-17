@@ -1,13 +1,20 @@
 'use strict';
 
-const process = require('process');
+/**
+ * Module dependencies
+ */
 const bodyParser = require('body-parser');
-const repo = require('./config/github/repo');
-const api = require('./lib/github-api');
-const checkShaHelper = require('./lib/helpers/check-sha');
-const errorHandlerHelper = require('./lib/helpers/error-handler');
-const featherIconHelper = require('./lib/helpers/feather-icon');
 const express = require('express');
+
+/**
+ * Utility function for loading modules relative to the application root.
+ * @param {string} path 
+ */
+global.require$ = path => require(__dirname + '/' + path);
+
+const checkShaHelper = require$('lib/helpers/check-sha');
+const errorHandlerHelper = require$('lib/helpers/error-handler');
+const featherIconHelper = require$('lib/helpers/feather-icon');
 
 const app = express();
 
