@@ -5,44 +5,16 @@ const process = require('process');
 const bodyParser = require('body-parser');
 const repo = require('./config/github-api').repo;
 const api = require('./lib/github-api');
+const featherIconHelper = require('./lib/helpers/feather-icon');
 const express = require('express');
 
 const app = express();
 
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.set('view engine', 'pug');
 
-// :feather-icons pug filter middleware
-const feather = require('feather-icons');
-app.use(function (req, res, next) {
-  const iconSizes = {
-    super: 32,
-    xlarge: 24,
-    large: 20,
-    medium: 16,
-    small: 13,
-    xsmall: 10,
-    tiny: 8
-  };
-
-  res.locals.filters = {
-    'feather-icon': (name, opts) => {
-      let {filename, size, ...rest} = opts;
-      if (typeof size === 'string')
-        size = iconSizes[size];
-      if (!size)
-        size = iconSizes.medium;
-
-      const attrs = {width: size, height: size, ...rest};
-      return feather.icons[name].toSvg(attrs);
-    },
-    
-    ...res.locals.filters
-  };
-
-  next();
-});
-
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(featherIconHelper);
 
 // check for updates
 app.use('/', (req, res, next) => {
