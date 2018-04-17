@@ -3,9 +3,24 @@ html
     title fountainhead - #{title}
     link(rel='stylesheet'
          href='//unpkg.com/blaze@4.0.0-6/scss/dist/blaze.min.css')
-    link(rel='stylesheet'
-         href='//use.fontawesome.com/releases/v5.0.10/css/all.css')
+    style.
+      .c-nav svg.feather {
+        vertical-align: -.33em;
+      }
+      .x-link--ext {
+        background-color: transparent;
+        background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjE5NmYzIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIj48cGF0aCBkPSJNMTggMTN2NmEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4YTIgMiAwIDAgMSAyLTJoNiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjE1IDMgMjEgMyAyMSA5Ij48L3BvbHlsaW5lPjxsaW5lIHgxPSIxMCIgeTE9IjE0IiB4Mj0iMjEiIHkyPSIzIj48L2xpbmU+PC9zdmc+");
+        background-position: top right;
+        background-repeat: no-repeat;
+        color: #2196f3;
+        padding-right: 13px;
+      }
   body.c-text
+    .c-nav.c-nav--inline
+      .o-container.o-container--large
+        .c-nav__item
+          :feather-icon(size='super') home
+          span.u-xlarge.u-pillar-box-small fountainhead
     .o-container.o-container--large
       block content
     .o-container.o-container--large

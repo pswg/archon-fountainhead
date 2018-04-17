@@ -1,7 +1,9 @@
 extends ../_layout.pug
 
 block content
-  h1.c-heading.u-xlarge pull requests
+  h2.c-heading.u-xlarge
+    :feather-icon(size='xlarge') git-pull-request
+    | pull requests
   div.u-small
     span.u-pillar-box-tiny filters:
     each link, key in {open:'', closed:'/closed', 'all':'/all'}
@@ -20,8 +22,7 @@ block content
             = `#${item.number}: ${item.title}`
           a(href=item.html_url
             target='_blank'
-            title='View on GitHub').c-link.c-link--info.u-pillar-box-small
-            i.fab.fa-github-alt
-            sup.u-pillar-box-tiny: i.fas.fa-external-link-alt
+            title='View on GitHub').c-link.x-link--ext.u-pillar-box-small
+            :feather-icon github
     else
       li No pull requests found.

@@ -1,32 +1,35 @@
 extends ../_layout.pug
 
 block content
-  h1.c-heading.u-large= data.title
+  h2.c-heading.u-xlarge
+    :feather-icon(size='xlarge') git-pull-request
+    | pull requests
+  h3.c-heading.u-large= data.title
     span.c-text--quiet &#32;##{number}
     a(href=data.html_url
       target='_blank'
-      title='View on GitHub').c-link.c-link--info.u-pillar-box-small
-      i.fab.fa-github-alt
-      sup.u-pillar-box-tiny: i.fas.fa-external-link-alt
+      title='View on GitHub').c-link.x-link--ext.u-pillar-box-small
+      :feather-icon(size='large') github
 
   .u-letter-box-medium 
     code.c-code.c-code--multiline.u-window-box-medium= data.body
 
     if data.user
       p.c-text--mono created by:&#32;
-        a(href=data.user.html_url)= data.user.login
-          sup.u-pillar-box-tiny: i.fas.fa-external-link-alt
+        a(href=data.user.html_url
+          target='_target').x-link--ext= data.user.login
 
     if data.merged_by
       p.c-text--mono merged by:&#32;
-        a(href=data.merged_by.html_url)= data.merged_by.login
-          sup.u-pillar-box-tiny: i.fas.fa-external-link-alt
+        a(href=data.merged_by.html_url
+          target='_target').x-link--ext= data.merged_by.login
         
   .u-letter-box-medium 
     if mergeable_state === 'MERGEABLE'
       form(action='/pulls/merge' method='POST' enctype='text/plain')
         input(type='hidden' name='number' value=number)
         button(type='submit').c-button
-          | Merge (Accept this proposal)
+          :feather-icon git-merge
+          | merge (accept this proposal)
     else if mergeable_state === 'CONFLICTING'
-      p The pull request cannot be merged due to merge conflicts.
+      p the pull request cannot be merged due to merge conflicts.
