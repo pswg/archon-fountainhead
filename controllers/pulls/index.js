@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express');
-const repo = require('../../config/github-api').repo;
+const repo = require('../../config/github/repo');
 const api = require('../../lib/github-api');
 
 const router = express.Router();
