@@ -15,13 +15,16 @@ proposed changes to application.
  3. *(optional)* Set up a GitHub API proxy for automatic authentication.
 
     For security reasons, the archon doesn't store or use any authentication
-    information to access the GitHub API. Unfortunately this means that it's 
-    abiliy access the API is quite limited when calling the API directly. To 
-    work around this, the archon is designed to pass all API requests through
-    a proxy that handles authenticating the archon to the GitHub server. 
+    information to access the GitHub API. Rather, it is designed to pass all API
+    requests through a proxy that handles authentication. 
+    
+    Unfortunately this means that means that when testing this project without
+    using the proxy, it's ability to interact with the API is severely limited.
+    Most notably, the rate limits are dramatically reduced, which can make
+    iterative debugging much more difficult.
 
     Setting up the proxy for local testing can be a bit cumbersome, and is not
-    strictly necessary for _most_ functions in the archon.
+    strictly necessary for _most_ functions in the archon. 
 
  4. *(optional)* Add an SHA key to the environment.
 
