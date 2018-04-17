@@ -26,7 +26,7 @@ block content
         
   .u-letter-box-medium 
     if data.mergeable === true
-      form(action='/pulls/merge' method='POST' enctype='text/plain')
+      form(action='/pulls/merge' method='POST')
         input(type='hidden' name='number' value=number)
         button(type='submit').c-button
           :feather-icon git-merge

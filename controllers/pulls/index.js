@@ -33,17 +33,17 @@ function item() {
 
 function merge() {
   return (req, res, next) => {
-    const number = parseInt(req.params.number);
+    const number = parseInt(req.body.number);
 
     return api.pullRequests.get({
         number,
         repo: repo.repo,
         owner: repo.owner,
       })
-      .then(pr => {
-        const title = `Merge pull request #${number} from ${pr.head.label}`;
-        const message = pr.title;
-        const sha = pr.head.sha;
+      .then(({ data }) => {
+        const title = `Merge pull request #${number} from ${data.head.label}`;
+        const message = data.title;
+        const sha = data.head.sha;
 
         return api.pullRequests.merge({
             repo: repo.repo,
