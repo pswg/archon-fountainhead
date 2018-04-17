@@ -1,63 +1,93 @@
 'use strict';
 
+const fs = require('fs');
 const process = require('process');
 const bodyParser = require('body-parser');
+const repo = require('./config/github-api').repo;
+const api = require('./lib/github-api');
 const express = require('express');
-const rp = require('request-promise');
+
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+
+app.set('view engine', 'pug');
+
+// :feather-icons pug filter middleware
+const feather = require('feather-icons');
+app.use(function (req, res, next) {
+  const iconSizes = {
+    super: 32,
+    xlarge: 24,
+    large: 20,
+    medium: 16,
+    small: 13,
+    xsmall: 10,
+    tiny: 8
+  };
+
+  res.locals.filters = {
+    'feather-icon': (name, opts) => {
+      let {filename, size, ...rest} = opts;
+      if (typeof size === 'string')
+        size = iconSizes[size];
+      if (!size)
+        size = iconSizes.medium;
+
+      const attrs = {width: size, height: size, ...rest};
+      return feather.icons[name].toSvg(attrs);
+    },
+    
+    ...res.locals.filters
+  };
+
+  next();
+});
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 // check for updates
-app.use("/", (req, res, next) => {
-    if (process.env.SHA) {
-        const uri = `https://api.github.com/repos/impyrio/archon-fountainhead/branches/master`;
-        const opts = {
-            json: true,
-            headers: { 'User-Agent': 'request' }
-        };
-        rp.get({uri, ...opts})
-            .then(({name, commit: {sha}}) => {
-                if (sha !== process.env.SHA) {
-                    res.status(503).send('A new version is available... server will restart soon');
-                } else {
-                next();
-                }
-            });
-    } else {
-        console.warn('No SHA defined. If this is a production environment, it may be vulnerable to attack.');
+app.use('/', (req, res, next) => {
+  if (process.env.SHA) {
+    api.repos.getBranch({
+      owner: repo.owner,
+      repo: repo.repo,
+      branch: repo.branch
+    }).then(({data, meta}) => {
+      if (data.commit.sha !== process.env.SHA) {
+        res.status(503).send('A new version is available... server will restart soon');
+      } else {
         next();
-    }
+      }
+    }).catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+  } else {
+    console.warn('SHA not defined. If this is a production environment, it may be vulnerable to attack.');
+    next();
+  }
 });
 
-app.get('/merge', function (req, res) {
-    res.sendFile('merge.html', { root: __dirname + '/views/' });
-});
+app.use('/pulls', require('./controllers/pulls'));
 
-app.post('/merge', function (req, res) {
-    const pr = parseInt(req.body.prNumber);
-    const prUri = `https://api.github.com/repos/impyrio/archon-fountainhead/pulls/${pr}`;
-    const opts = {
-        json: true,
-        headers: { 'User-Agent': 'request' }
-    };
-    rp.get({ uri: prUri, ...opts })
-        .then((json) => {
-            const mergeUri = `${prUri}/merge`;
-            const body = {
-                commit_title : `Merge pull request #${pr} from ${json.head.label}`,
-                commit_message : json.title,
-                sha : json.merge_commit_sha,
-                merge_method: 'merge'
-            };
+// generic error handler
+app.use(function (err, req, res, next) {
+  const code = err.code || 500;
+  const meta = err.headers;
+  const specificView = `errors/${code}`;
+  const genericView = 'errors/_generic';
+  const specificViewPath = `${__dirname}/views/${specificView}.pug`;
+  const view = fs.existsSync(specificViewPath) ? specificView : genericView;
 
-            return rp.put({uri: mergeUri, body, ...opts})
-                .then(({ message, sha }) => {
-                    res.send(`Result: ${message} \nsha: ${sha}`);
-                });
-        })
-        .catch(({ message, documentation_url }) => {
-            res.send(`Failed: ${message}`);
-        });
+  // Try to convert the message to an object
+  let data;
+  try {
+    data = JSON.parse(err.message);
+  } catch (_) {}
+
+  res.status(code).render(view, {code, data, err, meta});
+  next(err);
 });
 
 const server = app.listen(3000);

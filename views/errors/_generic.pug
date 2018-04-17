@@ -1,0 +1,19 @@
+extends ../_layout.pug
+
+block content
+  h1.c-heading.u-large= code
+  if data && data.message
+    h2.c-heading.u-medium= data.message
+      if data.documentation_url
+        a(href=data.documentation_url
+          target='_blank'
+          title='Help').c-link.c-link--info.u-pillar-box-small
+          i.fas.fa-info-circle
+          sup.u-pillar-box-tiny: i.fas.fa-external-link-alt
+  else
+    .u-letter-box-medium 
+      code.c-code.c-code--multiline.u-window-box-medium= err.message
+  .u-letter-box-medium 
+    code.c-code.c-code--multiline.u-xsmall= err.stack
+  .u-letter-box-medium
+    a(href='/pulls').c-link return to pull requests

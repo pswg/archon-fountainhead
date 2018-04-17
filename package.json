@@ -19,8 +19,11 @@
   },
   "homepage": "https://github.com/impyrio/archon-fountainhead#readme",
   "dependencies": {
+    "@octokit/rest": "^15.2.6",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "feather-icons": "^4.7.0",
+    "pug": "^2.0.3",
     "request": "^2.85.0",
     "request-promise": "^4.2.2"
   }
