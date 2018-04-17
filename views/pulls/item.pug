@@ -25,11 +25,11 @@ block content
           target='_target').x-link--ext= data.merged_by.login
         
   .u-letter-box-medium 
-    if mergeable_state === 'MERGEABLE'
+    if data.mergeable === true
       form(action='/pulls/merge' method='POST' enctype='text/plain')
         input(type='hidden' name='number' value=number)
         button(type='submit').c-button
           :feather-icon git-merge
           | merge (accept this proposal)
-    else if mergeable_state === 'CONFLICTING'
+    else if data.mergeable_state === 'CONFLICTING'
       p the pull request cannot be merged due to merge conflicts.
