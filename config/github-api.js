@@ -3,7 +3,7 @@
 const process = require('process');
 
 const apiConfig = {
-    baseUri: process.env.GITHUB_API_BASEURI || 'https://api.github.com',
+    baseUrl: process.env.GITHUB_API_BASEURL || 'https://api.github.com',
     headers: {
         'User-Agent': 'request'
     }
