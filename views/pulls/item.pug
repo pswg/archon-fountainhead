@@ -1,5 +1,8 @@
 extends ../_layout.pug
 
+block vars
+  - const title = `pull request: ${data.title} #${number}`
+
 block content
   h2.c-heading.u-xlarge
     :feather-icon(size='xlarge') git-pull-request

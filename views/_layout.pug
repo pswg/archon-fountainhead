@@ -1,6 +1,7 @@
+block vars
 html
   head
-    title fountainhead - #{title}
+    title fountainhead#{title ? ' - ' + title : ''}
     link(rel='stylesheet' href='//unpkg.com/blaze@4.0.0-6/scss/dist/blaze.min.css')
     link(rel='stylesheet' href='/assets/style.css')
   body.c-text
