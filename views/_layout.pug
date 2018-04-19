@@ -1,32 +1,24 @@
+block vars
 html
   head
-    title fountainhead - #{title}
-    link(rel='stylesheet'
-         href='//unpkg.com/blaze@4.0.0-6/scss/dist/blaze.min.css')
-    style.
-      .c-nav svg.feather {
-        vertical-align: -.33em;
-      }
-      .x-link--ext {
-        background-color: transparent;
-        background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjE5NmYzIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIj48cGF0aCBkPSJNMTggMTN2NmEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY4YTIgMiAwIDAgMSAyLTJoNiI+PC9wYXRoPjxwb2x5bGluZSBwb2ludHM9IjE1IDMgMjEgMyAyMSA5Ij48L3BvbHlsaW5lPjxsaW5lIHgxPSIxMCIgeTE9IjE0IiB4Mj0iMjEiIHkyPSIzIj48L2xpbmU+PC9zdmc+");
-        background-position: top right;
-        background-repeat: no-repeat;
-        color: #2196f3;
-        padding-right: 13px;
-      }
+    title fountainhead#{title ? ' - ' + title : ''}
+    link(rel='stylesheet' href='//unpkg.com/blaze@4.0.0-6/scss/dist/blaze.min.css')
+    link(rel='stylesheet' href='/assets/style.css')
   body.c-text
     .c-nav.c-nav--inline
       .o-container.o-container--large
-        a(href='/pulls').c-nav__item
-          :feather-icon(size='super') home
+        a(href='/pulls').c-nav__item#nav-home
+          img(src='/assets/fountainhead-logow.svg').logo
           span.u-xlarge.u-pillar-box-small fountainhead
     .o-container.o-container--large
       block content
-    .o-container.o-container--large
+    .o-container.o-container--large.c-text--mono#footer
       if meta && meta['x-ratelimit-limit']
-        p.u-xsmall.c-text--mono#rate_limit
+        p.u-xsmall#rate_limit
           | api rate limit: 
           | #{meta['x-ratelimit-remaining']}/#{meta['x-ratelimit-limit']}
       else
         p.u-xsmall.c-text--mono no meta *frumple*
+      p.u-xsmall.
+        #[a(href="https://thenounproject.com/term/mountains/823046") Mountains]
+        icon by Edward Boatman from the Noun Project
