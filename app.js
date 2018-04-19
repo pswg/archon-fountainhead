@@ -26,6 +26,7 @@ app.use(featherIconHelper);
 app.use(checkShaHelper);
 
 app.use('/pulls', require('./controllers/pulls'));
+app.use('/assets', express.static('assets'));
 
 app.use(errorHandlerHelper);
 
