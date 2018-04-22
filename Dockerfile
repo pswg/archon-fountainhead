@@ -13,9 +13,9 @@ RUN npm install \
  && mv /app/node_modules /node_modules
 
 # Copy app source
-COPY . /app
+COPY /app /app
 
-ENV PORT 3000
-EXPOSE 3000
+ENV PORT 80
+EXPOSE 80
 
 CMD [ "npm", "start" ]
