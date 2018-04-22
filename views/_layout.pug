@@ -1,15 +1,19 @@
 block vars
+
 html
   head
     title fountainhead#{title ? ' - ' + title : ''}
     link(rel='stylesheet' href='//unpkg.com/blaze@4.0.0-6/scss/dist/blaze.min.css')
     link(rel='stylesheet' href='/assets/style.css')
+  
   body.c-text
-    .c-nav.c-nav--inline
-      .o-container.o-container--large
-        a(href='/pulls').c-nav__item#nav-home
-          img(src='/assets/fountainhead-logow.svg').logo
-          span.u-xlarge.u-pillar-box-small fountainhead
+    if !hideNav
+      .c-nav.c-nav--inline
+        .o-container.o-container--large
+          a(href='/pulls').c-nav__item#nav-home
+            img(src='/assets/fountainhead-logow.svg').logo
+            span.u-xlarge.u-pillar-box-small fountainhead
+    
     .o-container.o-container--large
       block content
     .o-container.o-container--large.c-text--mono#footer
