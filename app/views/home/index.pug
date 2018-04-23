@@ -1,0 +1,22 @@
+extends ../_layout.pug
+
+block vars
+  - var hideNav = true;
+
+block content
+  .u-letter-box-super
+    .o-media
+      img(src='/assets/fountainhead-logo.svg').logo
+      .o-media__body
+        h1.c-heading fountainhead
+          span.c-heading__sub .impyr.io
+              
+        .u-small
+          span.u-pillar-box-tiny
+            a(href='https://github.com/impyrio/archon-fountainhead/').c-link.x-link--ext
+              | view on github
+        
+        .u-letter-box-medium
+          a(href='/pulls')
+            :feather-icon git-pull-request
+            | view pull requests

@@ -25,9 +25,10 @@ app.set('view engine', 'pug');
 app.use(featherIconHelper);
 app.use(checkShaHelper);
 
+app.use('/', require('./controllers/home'));
 app.use('/pulls', require('./controllers/pulls'));
 app.use('/assets', express.static('assets'));
 
 app.use(errorHandlerHelper);
 
-const server = app.listen(3000);
+const server = app.listen(process.env.PORT || 80);
