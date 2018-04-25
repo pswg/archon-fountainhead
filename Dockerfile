@@ -8,12 +8,11 @@ WORKDIR /app
 # Install dependencies
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm install \
- && npm ls \
  && npm cache clean --force \
  && mv /app/node_modules /node_modules
 
 # Copy app source
-COPY /app /app
+COPY app ./app
 
 ENV PORT 3000
 EXPOSE 3000
