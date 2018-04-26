@@ -13,8 +13,11 @@ function list(state) {
         owner: repo.owner,
         state
       })
-      .then(result => { res.render('lore/list', {state, ...result}); })
-      .catch(err => { next(err); });
+      .then(result => { 
+        result.data = result.data.filter(pr => pr.merged_at);
+        res.render('lore/list', {state, ...result}); })
+      .catch(err => { 
+        next(err); });
 }
 
 function item() {
@@ -31,7 +34,7 @@ function item() {
   };
 }
 
-router.get('/', list('open'));
+router.get('/', list('closed'));
 router.get('/:number', item());
 
 module.exports = router;
