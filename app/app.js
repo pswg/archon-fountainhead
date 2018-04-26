@@ -30,6 +30,7 @@ app.use(featherIconHelper);
 app.use(checkShaHelper);
 
 app.use('/', require('./controllers/home'));
+app.use('/lore', require('./controllers/lore'));
 app.use('/pulls', require('./controllers/pulls'));
 
 app.use(errorHandlerHelper);
