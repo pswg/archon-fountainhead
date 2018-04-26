@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
 
-app.use('/assets', express.static('./assets'));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use(featherIconHelper);
 app.use(checkShaHelper);
