@@ -10,37 +10,47 @@ html
     if !hideNav
       .c-nav.c-nav--inline
         .o-container.o-container--large
-          a(href='/pulls').c-nav__item#nav-home
+          a(href='/').c-nav__item#nav-home
             img(src='/assets/fountainhead-logow.svg').logo
             span.u-xlarge.u-pillar-box-small fountainhead
+              span.c-heading__sub .impyr.io
+          
+          a(href='/lore').c-nav__item#nav-home
+            :feather-icon git-commit
+            span.u-pillar-box-small lore
+          
+          a(href='/pulls').c-nav__item#nav-home
+            :feather-icon git-pull-request
+            span.u-pillar-box-small pulls
     
     .o-container.o-container--large
       block content
-    
-    .o-container.o-container--large.o-grid.c-text--mono#footer
-      .o-grid__cell
-        .o-grid-text
-          p.u-xsmall
-            if !commit_sha || !current_sha
-              | no sha *frumple*
-            else if current_sha === commit_sha
-              a(href=`https://github.com/impyrio/archon-fountainhead/commit/${current_sha}`).x-link--ext
-                | rev #{current_sha.substr(0, 7)}
-            else
-              span(aria-label="This app instance is out of date. Syncing soon.").c-badge.c-badge--brand.c-tooltip.c-tooltip--right
-                :feather-icon(size='xsmall' style='vertical-align: top') alert-triangle
-                | rev #{current_sha.substr(0, 7)}
 
-      .o-grid__cell
-        .o-grid-text
-          if meta && meta['x-ratelimit-limit']
-            p.u-xsmall#rate_limit
-              | api rate limit: 
-              | #{meta['x-ratelimit-remaining']}/#{meta['x-ratelimit-limit']}
-          else
-            p.u-xsmall.c-text--mono no meta *frumple*
-      .o-grid__cell.o-grid__cell--width-50
-        .o-grid-text
-          p.u-xsmall.
-            #[a(href="https://thenounproject.com/term/mountains/823046").x-link--ext Mountains]
-            icon by Edward Boatman from the Noun Project
+    #footer
+      .o-container.o-container--large.o-grid.c-text--mono
+        .o-grid__cell
+          .o-grid-text
+            p.u-xsmall
+              if !commit_sha || !current_sha
+                | no sha *frumple*
+              else if current_sha === commit_sha
+                a(href=`https://github.com/impyrio/archon-fountainhead/commit/${current_sha}`).x-link--ext
+                  | rev #{current_sha.substr(0, 7)}
+              else
+                span(aria-label="This app instance is out of date. Syncing soon.").c-badge.c-badge--brand.c-tooltip.c-tooltip--right
+                  :feather-icon(size='xsmall' style='vertical-align: top') alert-triangle
+                  | rev #{current_sha.substr(0, 7)}
+
+        .o-grid__cell
+          .o-grid-text
+            if meta && meta['x-ratelimit-limit']
+              p.u-xsmall#rate_limit
+                | api rate limit: 
+                | #{meta['x-ratelimit-remaining']}/#{meta['x-ratelimit-limit']}
+            else
+              p.u-xsmall.c-text--mono no meta *frumple*
+        .o-grid__cell.o-grid__cell--width-50
+          .o-grid-text
+            p.u-xsmall.
+              #[a(href="https://thenounproject.com/term/mountains/823046").x-link--ext Mountains]
+              icon by Edward Boatman from the Noun Project

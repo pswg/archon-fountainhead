@@ -4,26 +4,27 @@ block vars
   - const title = state + ' pull requests'
 
 block content
-    h2.c-heading.u-xlarge
-        :feather-icon(size='xlarge') git-pull-request
-        | The Impyrial Book of Law
+  h2.c-heading.u-xlarge
+    :feather-icon(size='xlarge') git-pull-request
+    | The Impyrial Book of Law
   ul
     each item in data
       li
         div
-            h3.c-heading.u-large= data.title
-                span.c-text--quiet &#32;##{number}
-                a(href=data.html_url
-                target='_blank'
-                title='View on GitHub').c-link.x-link--ext.u-pillar-box-small
-                :feather-icon(size='large') github
-            if data.user
-                p.c-text--mono authored by:&#32;
-                    a(href=data.user.html_url
-                    target='_target').x-link--ext= data.user.login
+          h3.c-heading.u-large= item.title
+            span.c-text--quiet &#32;##{item.number}
+              a(href=item.html_url
+              target='_blank'
+              title='View on GitHub').c-link.x-link--ext.u-pillar-box-small
+              :feather-icon(size='large') github
+            if item.user
+              p.c-text--mono authored by:&#32;
+                a(href=item.user.html_url
+                target='_target').x-link--ext= item.user.login
 
-            .u-letter-box-medium 
-                code.c-code.c-code--multiline.u-window-box-medium= data.body
+            if item.body
+              .u-letter-box-medium 
+                code.c-code.c-code--multiline.u-window-box-medium= item.body
                 
     else
       li No Laws have been passed.
