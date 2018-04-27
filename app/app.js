@@ -1,37 +1,34 @@
 'use strict';
 
+// Add the root project directory to the app module search path
+import 'app-module-path/register';
+
 /**
  * Module dependencies
  */
-const bodyParser = require('body-parser');
-const express = require('express');
-const path = require('path');
+import { urlencoded } from "body-parser";
+import express, { static } from "express";
+import { join } from "path";
 
-/**
- * Utility function for loading modules relative to the application root.
- * @param {string} path 
- */
-global.require$ = p => require(path.join(__dirname, p));
-
-const checkShaHelper = require$('lib/helpers/check-sha');
-const errorHandlerHelper = require$('lib/helpers/error-handler');
-const featherIconHelper = require$('lib/helpers/feather-icon');
+import homeController from 'controllers/home';
+import loreController from 'controllers/lore';
+import pullsController from 'controllers/pulls';
 
 const app = express();
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(urlencoded({extended: true}));
 
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, '/views'));
+app.set('views', join(__dirname, '/views'));
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/assets', static(join(__dirname, 'assets')));
 
 app.use(featherIconHelper);
 app.use(checkShaHelper);
 
-app.use('/', require('./controllers/home'));
-app.use('/lore', require('./controllers/lore'));
-app.use('/pulls', require('./controllers/pulls'));
+app.use('/', homeController);
+app.use('/lore', loreController);
+app.use('/pulls', pullsController);
 
 app.use(errorHandlerHelper);
 

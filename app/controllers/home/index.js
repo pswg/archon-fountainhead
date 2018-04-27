@@ -1,13 +1,13 @@
 'use strict';
 
-const express = require('express');
-const repo = require$('config/github/repo');
-const api = require$('lib/github-api');
+import { Router } from "express";
+import repo from "config/github/repo";
+import api from "lib/github-api";
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', (req, res) => {
   res.render('home/index');
 });
 
-module.exports = router;
+export default router;

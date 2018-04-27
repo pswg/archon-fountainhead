@@ -3,12 +3,12 @@
 /**
  * Module dependencies.
  */
-const feather = require('feather-icons');
+import { icons } from "feather-icons";
 
 /**
  * Express middleware function.
  */
-const helper = module.exports = function (req, res, next) {
+const helper = function (req, res, next) {
   if (!res.locals.filters) 
     res.locals.filters = {};
   
@@ -37,7 +37,7 @@ const iconSizes = helper.iconSizes = {
  * @returns {string}
  */
 const filter = helper.filter = function(name, opts) {
-  if (!feather.icons[name])
+  if (!icons[name])
     return '';
 
   let { filename, size, ...rest } = opts;
@@ -46,5 +46,7 @@ const filter = helper.filter = function(name, opts) {
   if (!size)
     size = iconSizes.medium;
 
-  return feather.icons[name].toSvg({ width: size, height: size, ...rest });
+  return icons[name].toSvg({ width: size, height: size, ...rest });
 };
+
+export default helper;

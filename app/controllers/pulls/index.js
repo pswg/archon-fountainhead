@@ -1,19 +1,15 @@
 'use strict';
 
-const express = require('express');
-const repo = require$('config/github/repo');
-const api = require$('lib/github-api');
+import { Router } from "express";
+import { repo, owner } from "config/github/repo";
+import { pullRequests } from "lib/github-api";
 
-const router = express.Router();
+const router = Router();
 
 function list(state) {
   return (req, res, next) => 
-    api.pullRequests.getAll({
-        repo: repo.repo,
-        owner: repo.owner,
-        state
-      })
-      .then(result => { res.render('pulls/list', {state, ...result}); })
+    pullRequests.getAll({ repo, owner, state })
+      .then(result => { res.render('pulls/list', { state, ...result }); })
       .catch(err => { next(err); });
 }
 
@@ -21,12 +17,8 @@ function item() {
   return (req, res, next) => {
     const number = parseInt(req.params.number);
 
-    return api.pullRequests.get({
-        number,
-        repo: repo.repo,
-        owner: repo.owner,
-      })
-      .then(result => { res.render('pulls/item', {number, ...result}); })
+    return pullRequests.get({ number, repo: repo, owner })
+      .then(result => { res.render('pulls/item', { number, ...result }); })
       .catch(err => { next(err); });
   };
 }
@@ -35,26 +27,22 @@ function merge() {
   return (req, res, next) => {
     const number = parseInt(req.body.number);
 
-    return api.pullRequests.get({
-        number,
-        repo: repo.repo,
-        owner: repo.owner,
-      })
+    return pullRequests.get({ number, repo, owner })
       .then(({ data }) => {
         const title = `Merge pull request #${number} from ${data.head.label}`;
         const message = data.title;
         const sha = data.head.sha;
 
-        return api.pullRequests.merge({
-            repo: repo.repo,
-            owner: repo.owner,
+        return pullRequests.merge({
+            repo, 
+            owner,
             number,
             commit_title: title,
             commit_message: message,
             sha
           });
       })
-      .then(result => { res.render('pulls/merged', {number, ...result}); })
+      .then(result => { res.render('pulls/merged', { number, ...result }); })
       .catch(err => { next(err); });
   };
 }
@@ -67,4 +55,4 @@ router.get('/:number', item());
 
 router.post('/merge', merge());
 
-module.exports = router;
+export default router;

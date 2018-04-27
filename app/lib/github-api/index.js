@@ -1,6 +1,6 @@
 'use strict';
 
-const GitHub = require('@octokit/rest');
-const api = require$('config/github/api');
+import GitHub from "@octokit/rest";
+import api from "config/github/api";
 
-module.exports = GitHub(api);
+export default GitHub(api);

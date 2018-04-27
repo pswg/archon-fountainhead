@@ -20,6 +20,7 @@
   "homepage": "https://github.com/impyrio/archon-fountainhead#readme",
   "dependencies": {
     "@octokit/rest": "^15.2.6",
+    "app-module-path": "^2.2.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "feather-icons": "^4.7.0",
