@@ -25,6 +25,7 @@
     "feather-icons": "^4.7.0",
     "pug": "^2.0.3",
     "request": "^2.85.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "serve-favicon": "^2.5.0"
   }
 }

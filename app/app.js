@@ -6,6 +6,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const path = require('path');
+const favicon = require('serve-favicon');
 
 /**
  * Utility function for loading modules relative to the application root.
@@ -25,6 +26,7 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use(favicon(path.join(__dirname, 'assets/favicon.ico')));
 
 app.use(featherIconHelper);
 app.use(checkShaHelper);
