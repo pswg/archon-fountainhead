@@ -4,9 +4,9 @@
   "description": "Archon Code for Fountainhead Impyr.io Instance",
   "main": "app.js",
   "scripts": {
-    "start": "set NODE_ENV=DEV && node app.js",
-    "start_prod": "set NODE_ENV=PROD && node app.js",
-    "test": "mocha test/*.js"
+    "start": "set NODE_ENV=DEV && node app/app.js",
+    "start_prod": "set NODE_ENV=PROD && node app/app.js",
+    "test": "mocha app/test/*.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "feather-icons": "^4.7.0",
     "pug": "^2.0.3",
     "request": "^2.85.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "serve-favicon": "^2.5.0"
   }
 }

@@ -17,7 +17,7 @@ module.exports = function (err, req, res, next) {
   const view = fs.existsSync(specificViewPath) ? specificView : genericView;
 
   // Try to convert the message to an object
-  let data;
+  let data = err.message;
   try {
     data = JSON.parse(err.message);
   } catch (_) {}
