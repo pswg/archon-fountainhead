@@ -6,15 +6,28 @@ const api = require$('lib/github-api');
 
 const router = express.Router();
 
-function list(state) {
+function sortByMergeDate(left,right){
+  const aMergeDate = Date.parse(a.merged_at);
+  const bMergeDate = Date.parse(b.merged_at);
+  if( aMergeDate < bMergeDate)
+    return -1;
+  else if (aMergeDate > bMergeDate)
+    return 1;
+  else 
+    return 0; 
+}
+
+function list() {
   return (req, res, next) => 
     api.pullRequests.getAll({
         repo: repo.repo,
         owner: repo.owner,
-        state
+        state: 'closed'
       })
       .then(result => { 
-        result.data = result.data.filter(pr => pr.merged_at);
+        result.data = result.data
+          .filter(pr => pr.merged_at)
+          .sort(sortByMergeDate);
         res.render('lore/list', {state, ...result}); })
       .catch(err => { 
         next(err); });
@@ -34,7 +47,7 @@ function item() {
   };
 }
 
-router.get('/', list('closed'));
+router.get('/', list());
 router.get('/:number', item());
 
 module.exports = router;
