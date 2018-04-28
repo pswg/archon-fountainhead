@@ -1,7 +1,7 @@
 extends ../_layout.pug
 
 block vars
-  - const title = 'Book of Law'
+  - const title = 'The Impyrial Book of Law'
 
 block content
   h2.c-heading.u-xlarge
@@ -25,6 +25,7 @@ block content
             if item.body
               .u-letter-box-medium 
                 code.c-code.c-code--multiline.u-window-box-medium= item.body
+            hr
                 
     else
       li No Laws have been passed.
