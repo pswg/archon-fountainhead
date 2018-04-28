@@ -28,7 +28,7 @@ function list() {
         result.data = result.data
           .filter(pr => pr.merged_at)
           .sort(sortByMergeDate);
-        res.render('lore/list', {state, ...result}); })
+        res.render('lore/list', { ...result}); })
       .catch(err => { 
         next(err); });
 }
