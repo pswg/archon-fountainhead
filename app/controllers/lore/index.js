@@ -6,7 +6,7 @@ const api = require$('lib/github-api');
 
 const router = express.Router();
 
-function sortByMergeDate(left,right){
+function sortByMergeDate(a,b){
   const aMergeDate = Date.parse(a.merged_at);
   const bMergeDate = Date.parse(b.merged_at);
   if( aMergeDate < bMergeDate)
