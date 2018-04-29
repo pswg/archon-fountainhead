@@ -4,28 +4,29 @@ block vars
   - const title = 'The Impyrial Book of Law'
 
 block content
-  h2.c-heading.u-xlarge
-    :feather-icon(size='xlarge') git-pull-request
-    | The Impyrial Book of Law
-  ol.book-of-law
-    each item in data
-      li
-        div.law
-          h3.c-heading.u-large.law-title= item.title
-            span.c-text--quiet
-              a(href=item.html_url
-              target='_blank'
-              title='View on GitHub').c-link.x-link--ext.u-pillar-box-small
-              :feather-icon(size='large') github
-            if item.user
-              p.c-text--mono.law-author authored by:&#32;
-                a(href=item.user.html_url
-                target='_target').x-link--ext= item.user.login
+  div.book-of-law
+    h2.c-heading.u-xlarge
+      :feather-icon(size='xlarge') git-pull-request
+      | The Impyrial Book of Law
+    ol
+      each item in data
+        li
+          div.law
+            h3.c-heading.u-large.law-title= item.title
+              span.c-text--quiet
+                a(href=item.html_url
+                target='_blank'
+                title='View on GitHub').c-link.x-link--ext.u-pillar-box-small
+                :feather-icon(size='large') github
+              if item.user
+                p.c-text--mono.law-author authored by:&#32;
+                  a(href=item.user.html_url
+                  target='_target').x-link--ext= item.user.login
 
-            if item.body
-              .u-letter-box-medium
-                code.c-code.c-code--multiline.u-window-box-medium.law-body!= md(item.body)
-            hr
-                
-    else
-      li No Laws have been passed.
+              if item.body
+                .u-letter-box-medium
+                  code.c-code.c-code--multiline.u-window-box-medium.law-body!= md(item.body)
+              hr
+                  
+      else
+        li No Laws have been passed.
