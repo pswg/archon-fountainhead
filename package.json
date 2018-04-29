@@ -24,6 +24,7 @@
     "express": "^4.16.3",
     "feather-icons": "^4.7.0",
     "hoek": "^5.0.3",
+    "marked": "^0.3.19",
     "pug": "^2.0.3",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",

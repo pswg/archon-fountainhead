@@ -18,6 +18,7 @@
 
 .book-of-law {
   background: beige;
+  border: .1rem solid black;
 }
 .law {
   font-family: 'Times New Roman', Times, serif
@@ -28,9 +29,13 @@
   font-style: italic;
 }
 .law-body{
-  background: whitesmoke;
+  background: beige;
+  border: .1rem solid black;
+  border-radius: 5px;
   font-family: 'Times New Roman', Times, serif;
   font-size: .8em;
+  overflow-y: scroll;
+  max-height: 250px;
 }
 
 #footer {

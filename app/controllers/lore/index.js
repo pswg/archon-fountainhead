@@ -3,6 +3,7 @@
 const express = require('express');
 const repo = require$('config/github/repo');
 const api = require$('lib/github-api');
+const md = require("marked").setOptions({gfm: true, sanitize:true});
 
 const router = express.Router();
 
@@ -28,7 +29,7 @@ function list() {
         result.data = result.data
           .filter(pr => pr.merged_at)
           .sort(sortByMergeDate);
-        res.render('lore/list', { ...result}); })
+        res.render('lore/list', { ...result, md}); })
       .catch(err => { 
         next(err); });
 }
