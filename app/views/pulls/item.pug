@@ -15,7 +15,7 @@ block content
       :feather-icon(size='large') github
 
   .u-letter-box-medium 
-    code.c-code.c-code--multiline.u-window-box-medium= data.body
+    u-window-box-medium!= md(data.body)
 
     if data.user
       p.c-text--mono created by:&#32;
