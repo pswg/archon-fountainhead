@@ -3,6 +3,7 @@
 const express = require('express');
 const repo = require$('config/github/repo');
 const api = require$('lib/github-api');
+const md = require("../../lib/helpers/markdown-renderer");
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ function item() {
         repo: repo.repo,
         owner: repo.owner,
       })
-      .then(result => { res.render('pulls/item', {number, ...result}); })
+      .then(result => { res.render('pulls/item', {number, ...result,md}); })
       .catch(err => { next(err); });
   };
 }
