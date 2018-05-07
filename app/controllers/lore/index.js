@@ -3,7 +3,7 @@
 const express = require('express');
 const repo = require$('config/github/repo');
 const api = require$('lib/github-api');
-const md = require("marked").setOptions({gfm: true, sanitize:true});
+const md = require("../../lib/helpers/markdown-renderer");
 
 const router = express.Router();
 
