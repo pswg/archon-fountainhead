@@ -3,14 +3,13 @@
 /**
  * Module dependencies.
  */
-const feather = require('feather-icons');
+const { icons } = require('feather-icons');
 
 /**
  * Express middleware function.
  */
 const helper = module.exports = function (req, res, next) {
-  if (!res.locals.filters) 
-    res.locals.filters = {};
+  res.locals = { filters: {}, ...res.locals };
   
   res.locals.filters['feather-icon'] = filter;
   next();
@@ -36,8 +35,8 @@ const iconSizes = helper.iconSizes = {
  * @param {string|number} opts.size - Size of the generated icon.
  * @returns {string}
  */
-const filter = helper.filter = function(name, opts) {
-  if (!feather.icons[name])
+const filter = helper.filter = function(name, opts = {}) {
+  if (!icons[name])
     return '';
 
   let { filename, size, ...rest } = opts;
@@ -46,5 +45,5 @@ const filter = helper.filter = function(name, opts) {
   if (!size)
     size = iconSizes.medium;
 
-  return feather.icons[name].toSvg({ width: size, height: size, ...rest });
+  return icons[name].toSvg({ width: size, height: size, ...rest });
 };
