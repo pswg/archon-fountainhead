@@ -1,0 +1,20 @@
+extends ../_layout.pug
+
+block vars
+  - const title = `${data.login}`
+
+block content
+  h2.c-heading.u-xlarge
+    :feather-icon(size='xlarge') user
+    | account
+  
+  .o-container.o-container--xsmall.u-letter-box-super
+    .c-card
+      img.o-image(src=data.avatar_url)/
+      .c-card__item.c-card__item--divider.c-card__item--brand= data.login
+      .c-card__body
+        .c-paragraph= data.bio
+      footer.c-card__footer
+        .c-input-group
+          a.c-button.c-button--block.c-button--error(href='/account/logout')
+            | Log Out

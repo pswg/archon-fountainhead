@@ -34,6 +34,7 @@ app.use(gitHubApiHelper);
 app.use(checkShaHelper);
 
 app.use('/', require('./controllers/home'));
+app.use('/account', require('./controllers/account'));
 app.use('/lore', require('./controllers/lore'));
 app.use('/pulls', require('./controllers/pulls'));
 

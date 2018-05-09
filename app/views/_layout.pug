@@ -15,13 +15,17 @@ html
             span.u-xlarge.u-pillar-box-small fountainhead
               span.c-heading__sub .impyr.io
           
-          a(href='/lore').c-nav__item#nav-home
+          a(href='/lore').c-nav__item
             :feather-icon git-commit
             span.u-pillar-box-small lore
           
-          a(href='/pulls').c-nav__item#nav-home
+          a(href='/pulls').c-nav__item
             :feather-icon git-pull-request
             span.u-pillar-box-small pulls
+          
+          a(href='/account').c-nav__item.c-nav__item--right
+            :feather-icon user
+            span.u-pillar-box-small account
     
     .o-container.o-container--large
       block content

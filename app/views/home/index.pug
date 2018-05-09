@@ -4,6 +4,13 @@ block vars
   - var hideNav = true;
 
 block content
+  // kind of a kludge
+  .c-nav--inline
+    .o-container.o-container--large
+      a(href='/account').c-nav__item.c-nav__item--right
+        :feather-icon user
+        span.u-pillar-box-small account
+        
   .u-letter-box-super
     .o-media
       img(src='/assets/fountainhead-logo.svg').logo
