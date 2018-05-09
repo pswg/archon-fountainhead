@@ -30,8 +30,8 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(favicon(path.join(__dirname, 'assets/favicon.ico')));
 
 app.use(featherIconHelper);
-app.use(checkShaHelper);
 app.use(gitHubApiHelper);
+app.use(checkShaHelper);
 
 app.use('/', require('./controllers/home'));
 app.use('/lore', require('./controllers/lore'));
