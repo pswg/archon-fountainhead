@@ -2,14 +2,13 @@
 
 const express = require('express');
 const repo = require$('config/github/repo');
-const api = require$('lib/github-api');
 const md = require("../../lib/helpers/markdown-renderer");
 
 const router = express.Router();
 
 function list(state) {
   return (req, res, next) => 
-    api.pullRequests.getAll({
+    req.api().pullRequests.getAll({
         repo: repo.repo,
         owner: repo.owner,
         state
@@ -22,7 +21,7 @@ function item() {
   return (req, res, next) => {
     const number = parseInt(req.params.number);
 
-    return api.pullRequests.get({
+    return req.api().pullRequests.get({
         number,
         repo: repo.repo,
         owner: repo.owner,
@@ -35,6 +34,7 @@ function item() {
 function merge() {
   return (req, res, next) => {
     const number = parseInt(req.body.number);
+    const api = req.api();
 
     return api.pullRequests.get({
         number,

@@ -2,9 +2,13 @@
 
 const process = require('process');
 
+const default_uri = 'https://api.github.com';
+
 module.exports = {
-  baseUrl: process.env.GITHUB_API_BASEURL || 'https://api.github.com',
-  headers: {
-    'User-Agent': 'request'
+  archon: {
+    uri: process.env.GITHUB_API_ARCHON_URI || default_uri
+  }, 
+  user: {
+    uri: process.env.GITHUB_API_USER_URI || default_uri
   }
 };

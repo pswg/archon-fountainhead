@@ -2,15 +2,14 @@
 
 const express = require('express');
 const repo = require$('config/github/repo');
-const api = require$('lib/github-api');
-const md = require("../../lib/helpers/markdown-renderer");
+const md = require('../../lib/helpers/markdown-renderer');
 
 const router = express.Router();
 
 function sortByMergeDate(a,b){
   const aMergeDate = Date.parse(a.merged_at);
   const bMergeDate = Date.parse(b.merged_at);
-  if( aMergeDate < bMergeDate)
+  if (aMergeDate < bMergeDate)
     return -1;
   else if (aMergeDate > bMergeDate)
     return 1;
@@ -20,7 +19,7 @@ function sortByMergeDate(a,b){
 
 function list() {
   return (req, res, next) => 
-    api.pullRequests.getAll({
+    req.api().pullRequests.getAll({
         repo: repo.repo,
         owner: repo.owner,
         state: 'closed'
@@ -29,16 +28,16 @@ function list() {
         result.data = result.data
           .filter(pr => pr.merged_at)
           .sort(sortByMergeDate);
-        res.render('lore/list', { ...result, md}); })
-      .catch(err => { 
-        next(err); });
+        res.render('lore/list', {md, ...result}); 
+      })
+      .catch(err => { next(err); });
 }
 
 function item() {
   return (req, res, next) => {
     const number = parseInt(req.params.number);
 
-    return api.pullRequests.get({
+    return req.api().pullRequests.get({
         number,
         repo: repo.repo,
         owner: repo.owner,
