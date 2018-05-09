@@ -7,7 +7,6 @@ var _ = require('lodash');
 const routes = require('@octokit/rest/lib/routes.json');
 const middleware = require('../lib/helpers/github-api');
 
-
 Feature('GitHub API middleware', () => {
 
   Scenario('Applying middleware', () => {
@@ -26,8 +25,9 @@ Feature('GitHub API middleware', () => {
     });
 
     Then('the `api` function is available in request', () => {
-      expect(req).to.have.property('api');
-      expect(req.api).to.be.a('function'); 
+      expect(req)
+        .to.have.property('api')
+        .that.is.a('function'); 
     });
   });
 
@@ -39,8 +39,9 @@ Feature('GitHub API middleware', () => {
     var sentCookies;
 
     Given('a request that includes a cookie', () => {
-      expect(req).to.have.nested.property('headers.cookie');
-      expect(req.headers.cookie).to.be.an('array');
+      expect(req)
+        .to.have.nested.property('headers.cookie')
+        .that.is.an('array');
     });
     And('mode = as archon', () => {
       expect(as).to.equal('archon');
@@ -78,8 +79,9 @@ Feature('GitHub API middleware', () => {
     var sentCookies;
 
     Given('a request that includes a cookie', () => {
-      expect(req).to.have.nested.property('headers.cookie');
-      expect(req.headers.cookie).to.be.an('array');
+      expect(req)
+        .to.have.nested.property('headers.cookie')
+        .that.is.an('array');
     });
     And('mode = as user', () => {
       expect(as).to.equal('user');
@@ -123,8 +125,7 @@ Feature('GitHub API middleware', () => {
       expect(res).to.be.an('object');
     });
     And('mode neither archon or user', () => {
-      expect(as).to.not.equal('archon');
-      expect(as).to.not.equal('user');
+      expect(['archon', 'user']).to.not.include(as);
     });
 
     When('middleware is applied', () => {

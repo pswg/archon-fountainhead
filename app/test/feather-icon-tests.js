@@ -6,26 +6,45 @@ const expect = require('chai').expect;
 const feather = require('feather-icons');
 const helper = require('../lib/helpers/feather-icon');
 
-describe(':feather-icon Helper', function () {
-  it('should inject a filter into the response\'s locals', (done) => {
-    // GIVEN
+Feature('Feather icon helper', () => {
+
+  Scenario('Applying middleware', () => {
     const req = {};
     const res = {};
-    // WHEN
-    helper(req, res, () => {});
-    // THEN
-    expect(res).to.have.nested.property('locals.filters.feather-icon');
-    expect(res.locals.filters['feather-icon']).to.be.a('function');
-    done();
+
+    Given('a request', () => {
+      expect(req).to.be.an('object');
+    });
+    And('a response', () => {
+      expect(res).to.be.an('object');
+    });
+
+    When('middleware is applied', () => {
+      helper(req, res, () => {});
+    });
+
+    Then('the `api` function is available in request', () => {
+      expect(res)
+        .to.have.nested.property('locals.filters.feather-icon')
+        .that.is.a('function');
+    });
   });
-  
-  it('should return an svg document', (done) => {
-    // GIVEN
+
+  Scenario('Applying the filter', () => {
     const name = 'x';
-    // WHEN
-    const icon = helper.filter(name);
-    // THEN
-    expect(icon).to.match(/^<svg.*<\/svg>$/);
-    done();
+    var result;
+
+    Given('a name of a knwon feather icon', () => {
+      expect(Object.keys(feather.icons)).to.contain(name);
+    });
+
+    When('filter is invoked or given icon', () => {
+      result = helper.filter(name);
+    });
+    
+    Then('result is an svg element', () => {
+      expect(result).to.be.a('string').that.match(/^<svg.*<\/svg>$/);
+    });
   });
+
 });
