@@ -6,7 +6,7 @@
   "scripts": {
     "start": "set NODE_ENV=DEV && node app/app.js",
     "start_prod": "set NODE_ENV=PROD && node app/app.js",
-    "test": "mocha app/test/*.js"
+    "test": "mocha --ui mocha-cakes-2 -t 2000 -c ./app/test"
   },
   "repository": {
     "type": "git",
