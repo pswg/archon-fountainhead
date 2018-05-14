@@ -7,13 +7,17 @@ block content
   h2.c-heading.u-xlarge
     :feather-icon(size='xlarge') user
     | account
-  .o-container.o-container--xsmall.u-letter-box-super
+  .o-container.o-container--small.u-letter-box-super
     .c-card
       .c-card__body
         .c-paragraph
           | You must log in to view your account details.
-      footer.c-card__footer
+      footer.c-card__footer.o-container.o-container--xsmall
         .c-input-group
           a.c-button.c-button--block.c-button--success(href=login_url) 
             :feather-icon(size='large') github
             | Log In with GitHub
+    .u-letter-box-super
+      .c-paragraph.c-text--quiet.u-small
+        | By logging in, you are agreeing to the Impyr.io 
+        a.c-link(href='/oauth:terms') Terms and Conditions.
