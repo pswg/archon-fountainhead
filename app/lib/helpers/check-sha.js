@@ -10,6 +10,8 @@ const repo = require('../../config/github/repo');
  * Express middleware
  */
 module.exports = function(req, res, next) {
+  if (!res.locals) res.locals = {};
+  
   res.locals.current_sha = process.env.SHA;
 
   req.api().repos.getBranch({
